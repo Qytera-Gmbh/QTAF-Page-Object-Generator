@@ -1,0 +1,32 @@
+package {{po_class.package}};
+
+import com.codeborne.selenide.SelenideElement;
+import de.qytera.qtaf.testng.context.QtafTestNGContext;
+import org.openqa.selenium.By;
+import com.syneco.synection.elements.ButtonElement;
+import com.syneco.synection.elements.DateTextElement;
+import com.syneco.synection.elements.FormCheckboxElement;
+import com.syneco.synection.elements.FormElement;
+import com.syneco.synection.elements.FormInputElement;
+import com.syneco.synection.elements.FormSelectElement;
+import com.syneco.synection.elements.LinkElement;
+import com.syneco.synection.elements.NumberElement;
+import com.syneco.synection.elements.TextElement;
+
+
+public class {{ po_class['name'] }} extends QtafTestNGContext {
+    /**
+     * Parent element
+     */
+    private Supplier<SelenideElement> parent = () -> $(By.css("{{ root_element_selector }}"));
+{%- for element in elements %}
+
+    /**
+     * {{ element["name"] }}
+     * @return page object
+     */
+    public {{ element["type"] }} {{ element['varname'] }}() {
+        return {{ element["type"] }}("{{ element["name"] }}", () -> parent.get().$("{{ element["selector"] }}"));
+    }
+{%- endfor %}
+}
